@@ -16,6 +16,9 @@ from modules.common.application import ports
 from modules.common.main.config import DatabaseConfig, SMTPConfig
 from dotenv import load_dotenv
 
+from modules.mail.adapters.integration import SMTP
+from modules.mail.application.common.ports import SMTPPort
+
 load_dotenv()
 
 
@@ -42,6 +45,11 @@ def build_container() -> Container:
     container.bind(
         bind_by_type(
             Dependent(persistence.MailGateway, scope="request"), ports.MailGatewayPort
+        )
+    )
+    container.bind(
+        bind_by_type(
+            Dependent(SMTP, scope="request"), SMTPPort
         )
     )
     container.bind(

@@ -1,5 +1,6 @@
 from modules.common.application import ports
 from modules.common.application.handlers import RequestHandler
+from modules.mail.application.common.ports import SMTPPort
 
 from .request import AddAIResultRequest
 from .response import AddAIResultResponse
@@ -11,9 +12,11 @@ class AddAIResultsRequestHandler(
     def __init__(
         self,
         ai_gateway: ports.AIGatewayPort,
+        smtp: SMTPPort,
         uow: ports.UoWPort,
     ) -> None:
         self._ai_gateway = ai_gateway
+        self._smtp = smtp
         self._uow = uow
 
     async def handle(self, request: AddAIResultRequest) -> AddAIResultResponse:

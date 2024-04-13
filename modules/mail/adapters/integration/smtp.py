@@ -1,4 +1,3 @@
-import asyncio
 import smtplib
 
 from email.mime.text import MIMEText
@@ -12,7 +11,7 @@ class SMTP(SMTPPort):
     def __init__(self, smtp_config: SMTPConfig) -> None:
         self._smtp_config = smtp_config
 
-    async def send_messages(self, *, mails: list[MailDTO]) -> list[MailDTO]:
+    async def send_messages(self, *, mails: list[MailDTO], msg_text: str) -> None:
 
         recipient_mails = [mail.mail for mail in mails]
 
