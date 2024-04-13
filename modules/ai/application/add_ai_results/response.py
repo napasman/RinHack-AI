@@ -6,4 +6,4 @@ from modules.common.application.handlers import Response
 
 @dataclass(frozen=True, kw_only=True)
 class AddAIResultResponse(Response):
-    traffic: TrafficDTO
+    traffic: list[TrafficDTO]

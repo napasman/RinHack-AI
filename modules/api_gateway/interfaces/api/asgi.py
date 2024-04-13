@@ -11,6 +11,7 @@ from modules.common.main.di import build_container
 
 from .controllers import (
     ai_controllers,
+    mail_controllers,
 )
 from .middlewares import ContainerMiddleware
 
@@ -46,4 +47,4 @@ def configure_ai_controllers(app: App, container: Container) -> None:
 
 
 def configure_mail_controllers(app: App, container: Container) -> None:
-    pass
+    app.add_route("/mail/add", mail_controllers.AddMailController(container=container))

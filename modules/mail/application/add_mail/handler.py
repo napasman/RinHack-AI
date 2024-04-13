@@ -6,9 +6,7 @@ from .request import AddMailRequest
 from .response import AddMailResponse
 
 
-class AddMailRequestHandler(
-    RequestHandler[AddMailRequest, AddMailResponse]
-):
+class AddMailRequestHandler(RequestHandler[AddMailRequest, AddMailResponse]):
     def __init__(
         self,
         mail_gateway: ports.MailGatewayPort,
