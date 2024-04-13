@@ -1,6 +1,5 @@
 from dataclasses import dataclass
 
-from modules.common.application.dto import MailDTO
 from modules.common.application.handlers import Request
 
 

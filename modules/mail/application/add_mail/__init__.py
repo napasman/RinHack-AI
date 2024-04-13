@@ -1,5 +1,9 @@
-from .handler import AddAIResultsRequestHandler
-from .request import AddAIResultRequest
-from .response import AddAIResultResponse
+from .handler import AddMailRequestHandler
+from .request import AddMailRequest
+from .response import AddMailResponse
 
-__all__ = ()
+__all__ = (
+    "AddMailRequestHandler",
+    "AddMailRequest",
+    "AddMailResponse",
+)

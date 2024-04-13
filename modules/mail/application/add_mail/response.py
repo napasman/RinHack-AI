@@ -5,5 +5,5 @@ from modules.common.application.handlers import Response
 
 
 @dataclass(frozen=True, kw_only=True)
-class AddAIResultResponse(Response):
+class AddMailResponse(Response):
     mail: MailDTO
