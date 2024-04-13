@@ -16,3 +16,16 @@ class DatabaseConfig:
                 SecretsEnum.DATABASE_CONNECTION_STRING, str
             )
         )
+
+
+@dataclass(frozen=True, kw_only=True)
+class SMTPConfig:
+    login: str
+    password: str
+
+    @classmethod
+    async def load(cls, source_provider: SourceProviderPort) -> Self:
+        return cls(
+            login=source_provider.get_variable(SecretsEnum.SMTP_LOGIN, str),
+            password=source_provider.get_variable(SecretsEnum.SMTP_PASSWORD, str),
+        )

@@ -13,7 +13,7 @@ from sqlalchemy.ext.asyncio import (
 from modules.common.adapters import persistence
 from modules.common.adapters.integration.source_provider.env import EnvSourceProvider
 from modules.common.application import ports
-from modules.common.main.config import DatabaseConfig
+from modules.common.main.config import DatabaseConfig, SMTPConfig
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -30,6 +30,7 @@ def build_container() -> Container:
     container.bind(
         bind_by_type(Dependent(DatabaseConfig.load, scope="app"), DatabaseConfig)
     )
+    container.bind(bind_by_type(Dependent(SMTPConfig.load, scope="app"), SMTPConfig))
     container.bind(
         bind_by_type(Dependent(persistence.UoW, scope="request"), ports.UoWPort)
     )

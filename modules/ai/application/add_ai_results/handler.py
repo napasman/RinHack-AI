@@ -18,8 +18,14 @@ class AddAIResultsRequestHandler(
 
     async def handle(self, request: AddAIResultRequest) -> AddAIResultResponse:
         async with self._uow:
-            traffic = await self._ai_gateway.insert_bulk(traffic_list=request.traffic)
+            traffic_list = await self._ai_gateway.insert_bulk(
+                traffic_list=request.traffic
+            )
+
+            for traffic in traffic_list:
+                if traffic.flag == "true":
+                    ...
 
             await self._uow.commit()
 
-        return AddAIResultResponse(traffic=traffic)
+        return AddAIResultResponse(traffic=traffic_list)
