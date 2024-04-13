@@ -39,6 +39,11 @@ def build_container() -> Container:
         )
     )
     container.bind(
+        bind_by_type(
+            Dependent(persistence.MailGateway, scope="request"), ports.MailGatewayPort
+        )
+    )
+    container.bind(
         bind_by_type(Dependent(provide_sqlalchemy_engine, scope="request"), AsyncEngine)
     )
     container.bind(
@@ -58,7 +63,7 @@ def build_container() -> Container:
 
 
 def provide_sqlalchemy_engine(config: DatabaseConfig) -> AsyncEngine:
-    return create_async_engine(config.connection_string, pool_pre_ping=True)
+    return create_async_engine(config.connection_string, echo=True, pool_pre_ping=True)
 
 
 def provide_sqlalchemy_sessionmaker(

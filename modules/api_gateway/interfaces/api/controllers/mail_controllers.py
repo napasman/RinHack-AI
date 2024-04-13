@@ -9,7 +9,7 @@ class AddMailController(BaseController):
     async def on_post(self, req: Request, resp: Response) -> None:
 
         handler = await self.provide_dependency(add_mail.AddMailRequestHandler)
-        media = req.get_media()
+        media = await req.get_media()
         request = self._retort.load(media, add_mail.AddMailRequest)
 
         response = await handler.handle(request)

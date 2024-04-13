@@ -23,6 +23,7 @@ def build_asgi(container: Container | None = None) -> App:
     container = container or build_container()
 
     configure_ai_controllers(app, container)
+    configure_mail_controllers(app, container)
 
     app.add_middleware(ContainerMiddleware(container=container))
 

@@ -59,6 +59,6 @@ mail_table = sa.Table(
     "mail",
     metadata,
     sa.Column("mail_id", sa.BigInteger, primary_key=True),
-    sa.Column("mail", sa.String(50)),
+    sa.Column("mail", sa.String(50), nullable=False),
     sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
 )

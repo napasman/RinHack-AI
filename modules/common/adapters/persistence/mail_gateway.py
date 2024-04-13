@@ -12,7 +12,6 @@ class MailGateway(MailGatewayPort):
 
     async def insert(self, *, mail: MailDTO) -> MailDTO:
         statement = insert(mail_table).values(
-            mail_id=mail.mail_id,
             mail=mail.mail,
             created_at=mail.created_at,
         )

@@ -20,4 +20,6 @@ class AddAIResultsRequestHandler(
         async with self._uow:
             traffic = await self._ai_gateway.insert_bulk(traffic_list=request.traffic)
 
+            await self._uow.commit()
+
         return AddAIResultResponse(traffic=traffic)
