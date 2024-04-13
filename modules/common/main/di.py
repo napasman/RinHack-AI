@@ -34,7 +34,9 @@ def build_container() -> Container:
         bind_by_type(Dependent(persistence.UoW, scope="request"), ports.UoWPort)
     )
     container.bind(
-        bind_by_type(Dependent(persistence.AIGateway, scope="request"), ports.AIGatewayPort)
+        bind_by_type(
+            Dependent(persistence.AIGateway, scope="request"), ports.AIGatewayPort
+        )
     )
     container.bind(
         bind_by_type(Dependent(provide_sqlalchemy_engine, scope="request"), AsyncEngine)
