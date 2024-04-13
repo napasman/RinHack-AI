@@ -58,7 +58,7 @@ def build_container() -> Container:
 
 
 def provide_sqlalchemy_engine(config: DatabaseConfig) -> AsyncEngine:
-    return create_async_engine(config.connection_string, pool_size=-1, max_overflow=-1)
+    return create_async_engine(config.connection_string, pool_pre_ping=True)
 
 
 def provide_sqlalchemy_sessionmaker(

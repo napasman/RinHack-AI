@@ -10,59 +10,67 @@ class AIGateway(AIGatewayPort):
     def __init__(self, session: AsyncSession) -> None:
         self._session = session
 
-    async def insert(self, *, traffic: TrafficDTO) -> TrafficDTO:
-        statement = insert(network_traffic_table).values(
-            id=traffic.id,
-            duration=traffic.duration,
-            protocol_type=traffic.protocol_type,
-            service=traffic.service,
-            flag=traffic.flag,
-            src_bytes=traffic.src_bytes,
-            dst_bytes=traffic.dst_bytes,
-            land=traffic.land,
-            wrong_fragment=traffic.wrong_fragment,
-            urgent=traffic.urgent,
-            hot=traffic.hot,
-            num_failed_logins=traffic.num_failed_logins,
-            logged_in=traffic.logged_in,
-            num_compromised=traffic.num_compromised,
-            root_shell=traffic.root_shell,
-            su_attempted=traffic.su_attempted,
-            num_root=traffic.num_root,
-            num_file_creations=traffic.num_file_creations,
-            num_shells=traffic.num_shells,
-            num_access_files=traffic.num_access_files,
-            num_outbound_cmds=traffic.num_outbound_cmds,
-            is_host_login=traffic.is_host_login,
-            is_guest_login=traffic.is_guest_login,
-            count=traffic.count,
-            srv_count=traffic.srv_count,
-            serror_rate=traffic.serror_rate,
-            srv_serror_rate=traffic.srv_serror_rate,
-            rerror_rate=traffic.rerror_rate,
-            srv_rerror_rate=traffic.srv_rerror_rate,
-            same_srv_rate=traffic.same_srv_rate,
-            diff_srv_rate=traffic.diff_srv_rate,
-            srv_diff_host_rate=traffic.srv_diff_host_rate,
-            dst_host_count=traffic.dst_host_count,
-            dst_host_srv_count=traffic.dst_host_srv_count,
-            dst_host_same_srv_rate=traffic.dst_host_same_srv_rate,
-            dst_host_diff_srv_rate=traffic.dst_host_diff_srv_rate,
-            dst_host_same_src_port_rate=traffic.dst_host_same_src_port_rate,
-            dst_host_srv_diff_host_rate=traffic.dst_host_srv_diff_host_rate,
-            dst_host_serror_rate=traffic.dst_host_serror_rate,
-            dst_host_srv_serror_rate=traffic.dst_host_srv_serror_rate,
-            dst_host_rerror_rate=traffic.dst_host_rerror_rate,
-            dst_host_srv_rerror_rate=traffic.dst_host_srv_rerror_rate,
-            label=traffic.label,
-            difficulty=traffic.difficulty,
-            created_at=traffic.created_at,
+    async def insert_bulk(self, *, traffic_list: list[TrafficDTO]) -> list[TrafficDTO]:
+        values_list = [
+            {
+                "id": traffic.id,
+                "duration": traffic.duration,
+                "protocol_type": traffic.protocol_type,
+                "service": traffic.service,
+                "flag": traffic.flag,
+                "src_bytes": traffic.src_bytes,
+                "dst_bytes": traffic.dst_bytes,
+                "land": traffic.land,
+                "wrong_fragment": traffic.wrong_fragment,
+                "urgent": traffic.urgent,
+                "hot": traffic.hot,
+                "num_failed_logins": traffic.num_failed_logins,
+                "logged_in": traffic.logged_in,
+                "num_compromised": traffic.num_compromised,
+                "root_shell": traffic.root_shell,
+                "su_attempted": traffic.su_attempted,
+                "num_root": traffic.num_root,
+                "num_file_creations": traffic.num_file_creations,
+                "num_shells": traffic.num_shells,
+                "num_access_files": traffic.num_access_files,
+                "num_outbound_cmds": traffic.num_outbound_cmds,
+                "is_host_login": traffic.is_host_login,
+                "is_guest_login": traffic.is_guest_login,
+                "count": traffic.count,
+                "srv_count": traffic.srv_count,
+                "serror_rate": traffic.serror_rate,
+                "srv_serror_rate": traffic.srv_serror_rate,
+                "rerror_rate": traffic.rerror_rate,
+                "srv_rerror_rate": traffic.srv_rerror_rate,
+                "same_srv_rate": traffic.same_srv_rate,
+                "diff_srv_rate": traffic.diff_srv_rate,
+                "srv_diff_host_rate": traffic.srv_diff_host_rate,
+                "dst_host_count": traffic.dst_host_count,
+                "dst_host_srv_count": traffic.dst_host_srv_count,
+                "dst_host_same_srv_rate": traffic.dst_host_same_srv_rate,
+                "dst_host_diff_srv_rate": traffic.dst_host_diff_srv_rate,
+                "dst_host_same_src_port_rate": traffic.dst_host_same_src_port_rate,
+                "dst_host_srv_diff_host_rate": traffic.dst_host_srv_diff_host_rate,
+                "dst_host_serror_rate": traffic.dst_host_serror_rate,
+                "dst_host_srv_serror_rate": traffic.dst_host_srv_serror_rate,
+                "dst_host_rerror_rate": traffic.dst_host_rerror_rate,
+                "dst_host_srv_rerror_rate": traffic.dst_host_srv_rerror_rate,
+                "label": traffic.label,
+                "difficulty": traffic.difficulty,
+                "created_at": traffic.created_at,
+            }
+            for traffic in traffic_list
+        ]
+
+        statement = (
+            insert(network_traffic_table)
+            .returning(*network_traffic_table.columns)
+            .values(values_list)
         )
 
         result = await self._session.execute(statement)
-        inserted_primary_key = result.inserted_primary_key[0]
 
-        return TrafficDTO(id=inserted_primary_key, **traffic.__dict__)
+        return [TrafficDTO(**traffic.__dict__) for traffic in result.all()]
 
     async def get_ai_results(self) -> list[TrafficDTO]:
         statement = select(network_traffic_table)

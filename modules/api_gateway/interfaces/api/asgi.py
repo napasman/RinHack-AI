@@ -40,3 +40,10 @@ def configure_ai_controllers(app: App, container: Container) -> None:
     app.add_route(
         "/ai/traffic", ai_controllers.GetAIResultsController(container=container)
     )
+    app.add_route(
+        "/ai/traffic/add", ai_controllers.AddAIResultsController(container=container)
+    )
+
+
+def configure_mail_controllers(app: App, container: Container) -> None:
+    pass

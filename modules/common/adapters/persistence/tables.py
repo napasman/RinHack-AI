@@ -53,3 +53,12 @@ network_traffic_table = sa.Table(
     sa.Column("difficulty", sa.String(50)),
     sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
 )
+
+
+mail_table = sa.Table(
+    "mail",
+    metadata,
+    sa.Column("mail_id", sa.BigInteger, primary_key=True),
+    sa.Column("mail", sa.String(50)),
+    sa.Column("created_at", sa.DateTime(timezone=True), nullable=False),
+)
