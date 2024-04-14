@@ -1,5 +1,8 @@
+import re
+
 from modules.common.application import ports
 from modules.common.application.dto import MailDTO
+from modules.common.application.errors import ApplicationError
 from modules.common.application.handlers import RequestHandler
 
 from .request import AddMailRequest
@@ -17,6 +20,10 @@ class AddMailRequestHandler(RequestHandler[AddMailRequest, AddMailResponse]):
 
     async def handle(self, request: AddMailRequest) -> AddMailResponse:
         async with self._uow:
+            pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+
+            if not re.match(pattern, request.mail):
+                raise ApplicationError("Invalid email address")
 
             mail = await self._mail_gateway.insert(mail=MailDTO(mail=request.mail))
 
