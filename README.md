@@ -6,86 +6,89 @@
 </ul> 
 <h4>Особенность проекта в следующем:</h4>
 <ul>
- <li>Киллерфича-1; </li>
- <li>Киллерфича-2;</li>
- <li>Киллерфича-3;</li>  
+ <li>Киллерфича-1; Архитектура, позволяющая легко масштабировать приложение</li>
+ <li>Киллерфича-2; Использование модели случайного леса</li>
  </ul>
 <h4>Основной стек технологий:</h4>
 <ul>
     <li>Falcon Web Framework</li>
 	<li>HTML, CSS, TypeScript.</li>
-	<li>PostgreSQL</li>
-	<li>Symfony, Laravel, Zend Framework, Yii, Kohana.</li>
-	<li>LESS, SASS, PostCSS.</li>
-	<li>Gulp, Webpack, Babel.</li>
-	<li>БЭМ.</li>
+	<li>PostgreSQL, SQLAlchemy, Alembic</li>
 	<li>Vue (Nuxt.js)</li>
-	<li>Git, Mercurial.</li>
-	<li>Jenkins, Gitlab.</li>
+	<li>Git, .</li>
+	<li>SMTP</li>
   
  </ul>
 <h4>Демо</h4>
-<p>Демо сервиса доступно по адресу: http://demo.test </p>
-<p>Реквизиты тестового пользователя: email: <b>testuser@test.ru</b>, пароль: <b>testuser</b></p>
+<p>Демо сервиса доступно по адресу: https://drive.google.com/drive/folders/1t4RWQrJN8P0yfC_VflBSiuj0JDo5jYpv </p>
 
 
 
 
 СРЕДА ЗАПУСКА
 ------------
-1) развертывание сервиса производится на debian-like linux (debian 9+);
-2) требуется установленный web-сервер с поддержкой PHP(версия 7.4+) интерпретации (apache, nginx);
-3) требуется установленная СУБД MariaDB (версия 10+);
-4) требуется установленный пакет name1 для работы с...;
+1) разработка и тестирование проводились на windows 10;
+2) требуется установить список зависимостей из requirements.txt;
+2) требуется установленная СУБД PostgreSQL;
 
 
 УСТАНОВКА
 ------------
-### Установка пакета name
+### Установка зависимостей
 
 Выполните 
 ~~~
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get install name1
-sudo apt-get install mariadb-client mariadb-server
-git clone https://github.com/Sinclear/default_readme
-cd default_readme
-...
+pip install -r req.txt
+~~~
+### Переменные окружения
+В файле .env необходимо указать переменные окружения:
+~~~
+SOURCE_PROVIDER=env
+DATABASE_CONNECTION_STRING=postgresql+asyncpg://postgres:postgres@localhost:5432/rinhack
+API_GATEWAY_BASE_URL=http://localhost:3000
+SMTP_LOGIN=
+SMTP_PASSWORD=
 ~~~
 ### База данных
 
-Необходимо создать пустую базу данных, а подключение к базе прописать в конфигурационный файл сервиса по адресу: папка_сервиса/...
+Необходимо создать пустую базу данных, предварительно прописав путь к подключению.
+Установка
+На Windows 10:
+С помощью графического клиента, либо
+Открыть powershell и установить chocolatey
 ~~~
-sudo systemctl restart mariadb
-sudo mysql_secure_installation
-mysql -u root -p
-mypassword
-CREATE DATABASE mynewdb;
-quit
+Set-ExecutionPolicy Bypass -Scope Process -Force; [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
 ~~~
+В командной строке:
+~~~
+choco install postgresql
+~~~
+Проверить версию:
+~~~
+psql --version
+~~~
+Создать БД:
+~~~
+psql -U postgres
+CREATE DATABASE rinhack;
+\q
+~~~
+
 ### Выполнение миграций
 
-Для заполнения базы данных системной информацией выполните в корневой папке сервиса: 
+Для выполнения миграций в консоли выполнить следующие команды: 
 ~~~
-mysql -u root -p -f mynewdb < папка_сервиса/...
-mypassword
+alembic revision --autogenerate
+alembic upgrade head
 ~~~
 и согласитесь с запросом
 
-### Установка зависимостей проекта
-
-Установка зависимостей осуществляется с помощью [Composer](http://getcomposer.org/). Если у вас его нет вы можете установить его по инструкции
-на [getcomposer.org](http://getcomposer.org/doc/00-intro.md#installation-nix).
-
-После этого выполнить команду в директории проекта:
-
+### Запуск сервера
 ~~~
-composer install
+uvicorn modules.api_gateway.interfaces.api.asgi:build_asgi --reload --host 0.0.0.0 --port 3000
 ~~~
-
 РАЗРАБОТЧИКИ
 
-<h4>Иванов Иван fullstack https://t.me/test@name1 </h4>
+<h4>Пилипенко Александр Сергеевич Full-Stack @PE4EN1K0</h4>
 
 
