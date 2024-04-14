@@ -1,0 +1,43 @@
+.main{
+    height: 100vh;
+    background-color: #131213;
+    padding: 20px;
+}
+
+.main > h1{
+    color: black;
+}
+
+.main > ul{
+    margin-top: 20px;
+    /* display: grid;
+    grid-template-columns: auto auto auto auto auto auto; */
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 20px;
+    gap: 15px;
+    color: white;
+}
+
+.title{
+    background-color: white;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.main > ul > li {
+    border: 1px dashed white;
+    padding: 5px 20px;
+}
+
+@media(max-width: 1250px){
+    .main > ul > li {
+        border: 1px dashed white;
+        padding: 5px 15px;
+    }
+    .main > ul{
+        gap: 10px;
+        font-size: 16px;
+    }
+}
