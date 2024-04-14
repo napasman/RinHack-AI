@@ -63,8 +63,8 @@ pip install -r req.txt
 SOURCE_PROVIDER=env
 DATABASE_CONNECTION_STRING=postgresql+asyncpg://postgres:postgres@localhost:5432/rinhack
 API_GATEWAY_BASE_URL=http://localhost:3000
-SMTP_LOGIN=
-SMTP_PASSWORD=
+SMTP_LOGIN="зарегистрированная почта с доступом к SMTP"
+SMTP_PASSWORD="зарегистрированная почта с доступом к SMTP"
 ~~~
 ### База данных
 
