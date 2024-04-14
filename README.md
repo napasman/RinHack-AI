@@ -13,10 +13,9 @@
 <h4>Основной стек технологий:</h4>
 <ul>
     <li>Falcon Web Framework</li>
-	<li>HTML, CSS, TypeScript.</li>
 	<li>PostgreSQL, SQLAlchemy, Alembic</li>
-	<li>Vue (Nuxt.js)</li>
-	<li>Git, .</li>
+	<li>React + TypeScript + Vite</li>
+	<li>Git.</li>
 	<li>SMTP</li>
   
  </ul>
