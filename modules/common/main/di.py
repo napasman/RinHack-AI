@@ -47,11 +47,7 @@ def build_container() -> Container:
             Dependent(persistence.MailGateway, scope="request"), ports.MailGatewayPort
         )
     )
-    container.bind(
-        bind_by_type(
-            Dependent(SMTP, scope="request"), SMTPPort
-        )
-    )
+    container.bind(bind_by_type(Dependent(SMTP, scope="request"), SMTPPort))
     container.bind(
         bind_by_type(Dependent(provide_sqlalchemy_engine, scope="request"), AsyncEngine)
     )

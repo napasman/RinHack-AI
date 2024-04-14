@@ -20,7 +20,7 @@ class AddMailRequestHandler(RequestHandler[AddMailRequest, AddMailResponse]):
 
     async def handle(self, request: AddMailRequest) -> AddMailResponse:
         async with self._uow:
-            pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+            pattern = r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
 
             if not re.match(pattern, request.mail):
                 raise ApplicationError("Invalid email address")

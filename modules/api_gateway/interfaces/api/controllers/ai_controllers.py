@@ -25,7 +25,7 @@ class AddAIResultsController(BaseController):
         handler = await self.provide_dependency(
             add_ai_results.AddAIResultsRequestHandler
         )
-        media = req.get_media()
+        media = await req.get_media()
         request = self._retort.load(media, add_ai_results.AddAIResultRequest)
 
         response = await handler.handle(request)

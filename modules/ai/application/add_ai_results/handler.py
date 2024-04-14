@@ -31,10 +31,13 @@ class AddAIResultsRequestHandler(
 
             mails_list = [mail.mail for mail in mails]
 
-            for traffic in traffic_list:
-                if traffic.flag == "true":
-                    smtp_message = f"Объект под id {traffic.id} является угрозой\n\n{traffic.__dict__}"
-                    await self._smtp.send_messages(mails=mails_list, msg_text=smtp_message)
+            if mails_list:
+                for traffic in traffic_list:
+                    if traffic.prediction == "true":
+                        smtp_message = f"Пакет под id {traffic.id} является угрозой\n\n{traffic.__dict__}"
+                        await self._smtp.send_messages(
+                            recipient_mails=mails_list, msg_text=smtp_message
+                        )
 
             await self._uow.commit()
 
