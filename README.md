@@ -14,6 +14,7 @@
 <ul>
     <li>Falcon Web Framework</li>
 	<li>PostgreSQL, SQLAlchemy, Alembic</li>
+    <li>Scikit-learn</li>
 	<li>React + TypeScript + Vite</li>
 	<li>Git.</li>
 	<li>SMTP</li>
