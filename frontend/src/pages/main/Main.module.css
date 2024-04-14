@@ -1,0 +1,41 @@
+.main{
+   height: 100vh;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background-color: antiquewhite;
+
+   background: url("../../img/cube2.gif") center, black;
+   background-blend-mode: screen;
+}
+
+.formInputs{
+   width: 400px;
+   display: flex;
+   flex-flow: column;
+   gap: 10px;
+}
+
+.input{
+   padding: 20px;
+   border-radius: 20px;
+   border: 0;
+   font-size: 18px;
+}
+
+.btn{
+   padding: 12px;
+   cursor: pointer;
+   text-align: center;
+   color: #000;
+   background-color: #fff;
+   border-radius: 20px;
+   font-weight: 900;
+   
+}
+
+.scrolldownimg{
+   width: 100px;
+   mix-blend-mode: screen;
+}
+
