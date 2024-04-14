@@ -56,7 +56,6 @@ for name, model in models.items():
     print("\n")
 
     for i, (index, row) in enumerate(X_test.iterrows()):
-        # Prepare the dictionary for each prediction
         traffic_data = {
             "timestamp": str(df.loc[index, "time_stamp"]),
             "source_ip": str(df.loc[index, "source_ip"]),
@@ -67,10 +66,7 @@ for name, model in models.items():
             "prediction": "true" if y_pred[i] == 1 else "false",
         }
 
-        # Encapsulate the dictionary in a list to match the expected list of TrafficDTO
         data = {"traffic": [traffic_data]}
 
-        # Sending the request to the specified endpoint
         response = requests.post(url="http://localhost:3000/ai/traffic/add", json=data)
         print(f"Sent data for index {index}: {response.status_code}")
-        time.sleep(1)  # Sleep for 1 second to mimic real-time data sending
