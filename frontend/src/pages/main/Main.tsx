@@ -1,16 +1,22 @@
 import { useState } from 'react'
 import custom from "./Main.module.css"
 import axios from 'axios'
+import { useMutation } from '@tanstack/react-query'
 function Main() {
 
     const [text, setText] = useState("")
+    const { mutate } = useMutation({
+        mutationFn: async (mail: string) => {
+            await axios.post("http://localhost:3000/mail/add", {
+                mail: mail
+            })
+        }
+    })
 
     async function sendEmail() {
         const emailRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
         if (emailRegex.test(text)) {
-            await axios.post("http://localhost:3000/mail/add", {
-                mail: text
-            })
+            mutate(text)
         }
     }
 

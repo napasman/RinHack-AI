@@ -3,6 +3,7 @@ import logging.config
 from adaptix.load_error import LoadError
 from di import Container
 from falcon.asgi import App
+from falcon import CORSMiddleware
 from modules.api_gateway.interfaces.api import error_handlers
 from modules.common.application.errors import ApplicationError
 from modules.common.domain.errors import DomainError
@@ -19,13 +20,17 @@ from .middlewares import ContainerMiddleware
 def build_asgi(container: Container | None = None) -> App:
     logging.config.fileConfig("logging.conf", disable_existing_loggers=False)
 
-    app = App()
+    app = App(cors_enable=True)
+
     container = container or build_container()
 
     configure_ai_controllers(app, container)
     configure_mail_controllers(app, container)
 
     app.add_middleware(ContainerMiddleware(container=container))
+    # app.add_middleware(App(middleware=CORSMiddleware(
+    # allow_origins='*', allow_credentials='*')))
+    configure_error_handlers(app)
 
     return app
 

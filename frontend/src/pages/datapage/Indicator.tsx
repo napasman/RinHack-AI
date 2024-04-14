@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import custom from "./Indicator.module.css"
 import Pagination from '@mui/material/Pagination'
 import axios from "axios"
+import { useQuery } from "@tanstack/react-query"
 
 interface dataArr {
     traffic: dataF[]
@@ -22,12 +23,23 @@ function Indicator() {
 
     const [page, setPage] = useState(1)
     const [data, setData] = useState<dataArr>({
-        traffic: []
+        traffic: [
+
+        ]
+    })
+
+    const { data: resultData } = useQuery({
+        queryKey: ['dataset'],
+        queryFn: async () => {
+            const res = await axios.get("http://localhost:3000/ai/traffic")
+            return res.data
+        },
+        refetchInterval: 3000
     })
     useEffect(() => {
-        async function fetchData() {
+        /* async function fetchData() {
             try {
-                await axios.get("https://run.mocky.io/v3/7ef4470c-fe90-4abf-a467-0e7ebed99e46")
+                await axios.get("http://localhost:3000/ai/traffic")
                     .then(res => res.data)
                     .then(res => setData(res))
             } catch (error) {
@@ -38,11 +50,14 @@ function Indicator() {
 
         const interval = setInterval(fetchData, 1000);
 
-        return () => clearInterval(interval);
-    }, [])
+        return () => clearInterval(interval); */
+        if (resultData) {
+            setData(resultData)
+        }
+    }, [resultData])
 
-    function handleChangePage(e: Event, p: number) {
-        console.log(e)
+    function handleChangePage(event: React.ChangeEvent<unknown>, p: number) {
+        console.log(event)
         setPage(p)
     }
     return (
