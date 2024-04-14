@@ -3,11 +3,11 @@ import custom from "./Indicator.module.css"
 import Pagination from '@mui/material/Pagination'
 import axios from "axios"
 
-type dataArr = {
+interface dataArr {
     traffic: dataF[]
 }
 
-type dataF = {
+interface dataF {
     id: number,
     time_stamp: string,
     source_ip: string,
@@ -21,11 +21,13 @@ type dataF = {
 function Indicator() {
 
     const [page, setPage] = useState(1)
-    const [data, setData] = useState<dataArr>([])
+    const [data, setData] = useState<dataArr>({
+        traffic: []
+    })
     useEffect(() => {
         async function fetchData() {
             try {
-                const res = await axios.get("http://localhost:3000/traffic")
+                await axios.get("https://run.mocky.io/v3/7ef4470c-fe90-4abf-a467-0e7ebed99e46")
                     .then(res => res.data)
                     .then(res => setData(res))
             } catch (error) {
@@ -39,12 +41,10 @@ function Indicator() {
         return () => clearInterval(interval);
     }, [])
 
-    function handleChangePage(e, p: number) {
+    function handleChangePage(e: Event, p: number) {
+        console.log(e)
         setPage(p)
     }
-
-    console.log(data)
-
     return (
         <div className={custom.main}>
             <div className={custom.title}>
