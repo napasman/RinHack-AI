@@ -104,8 +104,5 @@ alembic upgrade head
 ~~~
 uvicorn modules.api_gateway.interfaces.api.asgi:build_asgi --reload --host 0.0.0.0 --port 3000
 ~~~
-РАЗРАБОТЧИКИ
-
-<h4>Пилипенко Александр Сергеевич Full-Stack @PE4EN1K0</h4>
 
 
